@@ -1,0 +1,6 @@
+# This is a test document for using the read.table function
+
+            Price   Num_Sold  In_Stock    Complex_Num
+Chips&Salsa 2.55   1729      TRUE        1+2i
+Drink       1.99    3435      T           5+18i
+Taco        3.49   36        FALSE       3+0i

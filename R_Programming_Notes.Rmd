@@ -2,7 +2,11 @@
 title: "R Programming"
 author: "Coursera Course by John Hopkins University"
 date: "INSTRUCTORS: Dr. Jeff Leek, Dr. Roger D. Peng, Dr. Brian Caffo"
-output: pdf_document
+fontsize: 11pt
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
 ---
 
 ```{r setup, include=FALSE}
@@ -11,8 +15,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ***
 # Overview of R, R data types and objects, reading and writing data
 
-## Installing R & RStuido
+## Installing R & RStudio
 * This was covered in the [previous course](https://docs.google.com/document/d/12Co5sjoHIaxAcpTWHRSIs8APAqIlaoOVMFRdGCsMKU0/edit?usp=sharing).
+
+## RMarkdown reference site  
+* [I found a site that expands on some features of R-Markdown and have been referencing it pretty regularly](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
 
 ## Swirl
 * swirl teaches you R programming and data science interactively, at your own pace, and right in the R console.  
@@ -115,7 +122,7 @@ print(x)
 
 
 
-## Differences between atomic data types
+## Different atomic data types
 
 * R has five basic, or "atomic", classes of objects:  
   + character  
@@ -310,18 +317,246 @@ dimnames(m) <- list(c("a", "b"), c("c", "d")) ##First vector is rownames, second
 m
 ```
   
+## Reading Data  
 
-## Basic Arithmetic operations
+### Tabular Data
+* Functions for **reading** data into R  
+  + `read.table`,`read.csv` - for reading tabular data 
+    - most common  
+    - reads in data that's organized into rows and cols
+    - returns a data frame
+  + `readLines`, for reading lines of a text file  
+  + `source`, for reading in R code files (inverse of `dump`)  
+  + `dget`, for reading in R code files (inverse of `dput`)  
+  + `load`, for reading in saved workspaces  
+  + `unserialize`, for reading single R objects in binary form  
+* Functions for **writing** data from R to files
+  + `write.table`  
+  + `writeLines`  
+  + `dump`  
+  + `dput`  
+  + `save`  
+  + `serialize`  
+* Arguments of `read.table` function
+  + `file` - the name of a file or connection  
+  + `header` - logical that indicates if the file has a header line  
+  + `sep` - a string that indicates how the columns are separated (tokens)  
+  + `colClasses` - a character vector that indicates the class (Data type) of each column  
+  + `nrows`  
+  + `comment.char` - character string that indicates the comment character (default is '#')  
+  + `skip` - number of lines to skip from the beginning  
+  + `stringsAsFactors` - (default = TRUE) should character variables be coded as factors?  
+* Implicit actions `R` takes
+```{r}
+data <- read.table("foo.txt") 
+## Header must not have a label for the row labels for R to implicitly determine them
+data
 
-## Subset R objects using the "[", "[[", and "$" operators and logical vectors
+```
+  + Skips lines that begin with a #
+  + figures out how many rows there are (and how much memory needs to be allocated)
+  + figure what type of variable is in each column of the table.
+    - Telling R all these things directly will make it run faster and more efficiently
+* `read.csv` is identical to `read.table` except that the default separator is a comma
+  - `.csv` files are common output from excel or other spreadsheet programs.
 
-## The explicit coercion feature of R
+### Large Datasets  
+* Doing the following things will make your life easier and prevent R from "choking"
+  + [Read the help page for read.table, which contains many hints](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table)  
+  + Make a rough calculation of the memory required to store your dataset. 
+    - Say for example, you have a data frame with 1,500,000 rows and 120 columns (not *that* big), all of which are numeric data. To roughly claculate how much memory is requrired..  
+    - 1,500,000 * 120 * 8 bytes/numeric = 1440000000 bytes  
+    - 1440000000 bytes / $2^{20}$ bytes/MB = 1,373.29 MB  
+    - 1,373.29 MB = 1.37 GB  
+    - Rule of thumb is that you'll need twice the amount of RAM to be able to read in the dataset  
+  + If the dataset is larger than the amount of RAM on your computer you can probably stop right here.
+    - Type `free -k` in terminal to return amount of RAM in kilobytes (`-b` for bytes, `-m` for megabytes and `-g` for gigabytes)
+  + Set `comment.char = ""` if there are no commented lines in your file.
+  + Use the `colClasses` argument.
+    - Specifying this option instead of using the default can make `read.table` run *MUCH* faster.
+    - To use this option you have to know the class of each column in your data frame.
+    - If all of the columns are of the same data type, for example "numeric", then you can just set `colClasses = "numeric"`
+    - A quick and dirty way to figure out the clases of each column is to take a small sample and determine it from that.
+```{r}
+initial <- read.table("datatable.txt", nrows = 100)
+classes <- sapply(initial, class)
+classes ##Coded file wrong, I'm not gonna fix it now, Boolean should have said "TRUE" or "FALSE"
+tabAll <- read.table("datatable.txt", 
+                     colClasses = classes)
+```
+  + Set `nrows` 
+    - This doesn't make R run faster but it helps with memory usage. 
+    - A mild overestimate is okay.
+    - You can type `wc <filename>` in terminal to return the number of: lines, strings, characters; "lines" are the `nrows`.  
+
+* When using R with larger datasets it's useful to know a few things about your system  
+  + How much memory is available  
+    - Type `free -k` into terminal  
+  + What other applications are in use  
+    - Type `ps aux` in terminal  
+  + Are there other users logged into the same system  
+    - Type `w` in terminal (Note: `last` will report a history)  
+  + What OS are you using  
+    - Type `lsb_release -a` into terminal  
+  + Is the OS 32 or 64 bit  
+    - Type `lscpu`, listed under first two returns 
+    - On a 64 bit system you'll generallly be able to access more memory
+
+### Textual Formats  
+* Contains the metadata, such as classes of columns, making transfering data more efficent as the metadata doesn't need to be determined again.  
+* Known as `dumping` and `dputing`.
+* Edit-able, which in the case of corruption allows for a potential recovery.
+* Textual formats can work much better with version control programs.
+* Adhere to the "Unix philosophy", which is to store data as text
+* *Downside:* The format is not very space-efficient and as such ussually requires compression  
+* `dput` will deparse an R object, and `dget` can read the data back in from a file
+```{r}
+y <- data.frame(a=1, b="a")
+dput(y) ## If file is not specified the output is displayed in the console
+dput(y, file = "y.R")
+new.y <- dget("y.R")##dget retrieves the object from a file
+new.y
+```
+
+* Multiple objects can be deparsed using the `dump` function, then read back in with `source`  
+  + The parameter for `dump` is a character vector that contains characters for the names of the variables one wishes to dump
+```{r}
+x <- "foo"
+y <- data.frame(a=1, b="a")
+dump(c("x", "y"))
+dump(c("x", "y"), file = "data.R")
+rm(x, y) ## removes the variables
+source("data.R") ## reconstructs y and x objects
+y
+x
+```
+
+### Connections (Interfaces to the outside world)
+* Connections can be made to files or to other, more "exotic" things.  
+  + `file` - opens a connection to a file  
+  + `gzfile` - opens a connection to a file compressed with *gzip*.  
+  + `bzfile` - opens a connection to a file compressed with *bzip2*.  
+  + `url` - opens a connection to a webpage (in HTML format).  
+* Arguments  
+  + `description` is the name of the file  
+  + `open` indicates how the file is opened
+    - **"r" -** read only  
+    - **"w" -** writing (and initializing a new file)  
+    - **"a" -** appending  
+    - **"rb", "wb", "ab" -** reading, writing, or appending in binary mode (Windows)  
+    - There are other options but they aren't uber important  
+* Connections are powerful tools that allow you to navigate files or other external objects in a more "sophisticated" way. 
+  + However, one does not need to deal with the connection interface in many case    
+```{r}
+con <- file("foo.txt", "r")
+data <- read.csv(con)
+close(con)
+```
+  + ^This is the same as..  
+```{r}
+data <- read.csv("foo.txt")
+```
+  + As such, the connection was not nessacary for this case
+* Reading lines of a text file with `con` from a *gzip* file  
+```{r}
+con <- gzfile("words.gz")
+x <- readLines(con, 10) ##reads in first 10 lines
+x
+```
+  + `writeLines` takes a character vector and writes each element one line at a time to a text file  
+* `readLines` can be used for reading in lines of webpages.  
+```{r}
+## This might take time
+con <- url("http://www.jhsph.edu", "r") ##John Hopkin's School of Public Health
+x <- readLines(con)
+head(x) ##Displays the header
+```
+
+## Subsetting R objects using the "[", "[[", and "$" operators and logical vectors  
+
+### Basics
+* Operators to extract subsets of R objects
+  + `[` always returns an object of the same class as the original
+    - subsetting a vector will return a vector, a list will return a list, etc.
+    - Can be used to select more than one element (there is one exception)
+  + `[[` is used to extract elements of a *list* or *data frame*
+    - Can only be used to extract a single element
+    - The class of the returned object will not necessarily be a list or data frame
+  + `$` is used to extract elements of a *list* or *data frame* by name
+    - Similar to `[[` as it may not be of the same class
+* Numerical Index for subsetting:
+```{r}
+x <- c("a", "b", "c", "c", "d", "a")
+x[1] ## Returns first element
+x[2] ## Returns second element
+x[1:4] ## Returns first to fourth elements
+```
+* Logical Index for subsetting:
+```{r}
+x <- c("a", "b", "c", "c", "d", "a")
+x[x > "a"]## returns all elements that are greater than "a"
+u <- x > "a" ## u is a logical vector that indicates which elements of x are greater than "a"
+u
+x[u] ## subsets all elements of x such that u reports that index as TRUE; elements that are > "a"
+```
+
+
+### Lists
+* Lists can be subsetted with the `[[` or `$` operators
+```{r}
+x <- list(foo = 1:4, bar = 0.6)
+x[1]##Extracts the first element as a list, since the orginal set was a list class
+x[[1]]##Extracts the first element as a sequence, not a list
+x$bar ##returns the element that is associated with the name "bar"
+x[["bar"]]##same as x$bar
+x["bar"]##returns a list with the element "bar" in it
+```
+  + subsetting with the name is helpful when the index isn't known
+* To extract multiple elements of a list, one must use the single bracket operator `[`
+```{r}
+x <- list(foo = 1:4, bar = 0.6, baz = "hello")
+x[c(1, 3)]##extracts the first and third element of the list
+```
+* The `[[` operator can be used with *computed* indices, whereas `$` can only be used with literal names.
+```{r}
+x <- list(foo = 1:4, bar = 0.6, baz = "hello")
+name <- "foo"
+x[[name]] ## computed index for 'foo'
+x$name ## element 'name' doesn't exist!
+x$foo ## element 'foo' does exist
+```
+* The `[[` can also take an integer sequence instead of a single number
+```{r}
+x <- list(a = list(10, 12, 14), b = c(3.14, 2.81))
+x[[c(1,3)]] ##extracts first element, then the third element of said first element
+x[[1]][[3]] ##equivelent
+x[[c(2,1)]]##extracts first element of the second element of x
+```
+
+
+### Matrices
+
+
+### Partial Matching
+
 
 ## Removing missing (NA) values from a vector
 
 
-# Control structures, functions, scoping rules, dates and times
 
+## Basic Arithmetic operations
+
+
+
+
+
+
+
+
+
+
+
+# Control structures, functions, scoping rules, dates and times
 
 
 # Loop functions, debugging tools
