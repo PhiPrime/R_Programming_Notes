@@ -18,14 +18,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Installing R & RStudio
 * This was covered in the [previous course](https://docs.google.com/document/d/12Co5sjoHIaxAcpTWHRSIs8APAqIlaoOVMFRdGCsMKU0/edit?usp=sharing).
 
-## RMarkdown reference site  
+## R-Markdown reference site  
 * [I found a site that expands on some features of R-Markdown and have been referencing it pretty regularly](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
 
 ## Swirl
 * swirl teaches you R programming and data science interactively, at your own pace, and right in the R console.  
 * Start swirl  
   + install the package "swirl" if you haven't yet  
-  + Everytime you want to run swirl execute:  
+  + Every time you want to run swirl execute:  
     - library("swirl")  
     - swirl()  
   + You'll then be prompted to install a course  
@@ -35,7 +35,7 @@ knitr::opts_chunk$set(echo = TRUE)
 * What is S?  
   + R is a dialect of S  
   + S was developed by John Chambers and others at Bell Labs  
-  + Initiated in 1976 as an internal statistical analysis environment, implemented as Fortran libraries
+  + Initiated in 1976 as an internal statistical analysis environment, implemented as FORTRAN libraries
     - Early versions did not contain functions for statistical modeling  
   + Version 3 was released in 1988, which was rewritten in C and began to resemble the system that we have today.  
   + Version 4 was released in 1998 and is the version we use today.  
@@ -45,7 +45,7 @@ knitr::opts_chunk$set(echo = TRUE)
   + (More about S)[https://web.archive.org/web/20181014111802/ect.bell-labs.com/sl/S/]  
 
 * What is R?  
-  + R was developed by Ross Ihaka and Robert Gentleman, they documented thier experience in a (1996 JCGS paper)[https://amstat.tandfonline.com/doi/abs/10.1080/10618600.1996.10474713].  
+  + R was developed by Ross Ihaka and Robert Gentleman, they documented their experience in a (1996 JCGS paper)[https://amstat.tandfonline.com/doi/abs/10.1080/10618600.1996.10474713].  
   + In 1995, R become free software after Martin Machler convinced Ross & Robert to use the GNU (General Public License)  
   + Versions  
     - R version 1.0.0 was released in 2000  
@@ -53,7 +53,7 @@ knitr::opts_chunk$set(echo = TRUE)
   + Syntax is similar to S, making it easy for S-PLUS users to switch over  
   + Runs on almost any standard computing platform/OS (even on the PS3)  
   + Frequent releases; active development and communities  
-  + Funtionality is divided into modular packages as to keep it "lean"  
+  + Functionality is divided into modular packages as to keep it "lean"  
   + It's free!  
   + What is free about Free Software?  
     - Freedom 0: freedom to run the program, for any purpose  
@@ -130,7 +130,7 @@ print(x)
   + numeric (real numbers)  
     - R thinks as numbers as these by default  
   + integer  
-    - Must be explicity declared with the L suffix; `x <- 1` assigns a numeric object, but `x <- 1L` explicitly assigns an integer  
+    - Must be explicitly declared with the L suffix; `x <- 1` assigns a numeric object, but `x <- 1L` explicitly assigns an integer  
   + complex   
   + logical (True/False)  
 
@@ -155,11 +155,12 @@ x <- c(1+0i, 2+4i) ## complex
 x <- vector() ## Creates an empty vector
 x ## Prints as code that evaluates as FALSE
 
-x <- vector(mode = "numeric", length = 10) ## Creates a vector with length "10" of 
-## numeric data type,default value is 0
+x <- vector(mode = "numeric", length = 10) 
+## Creates a vector with length "10" of numeric data type,default value is 0
 x
 
-x <- vector("numeric", 5) ##The parameter names are not required, but can easily clarify code
+x <- vector("numeric", 5) 
+##The parameter names are not required, but can easily clarify code
 x
 ```
   + When different objects are mixed in a vector, **coercion** occurs so all objects are of the same class.  
@@ -177,8 +178,8 @@ y[2] ## "TRUE" is a string stored as a "character" data type
 y[3] ## The third element does not exist
 ```
     
-  + Objects can be **explicitly coerced** from onne class to another using the `as.*` functions, if available.  
-    - Nonsensical coercion reasults in `NA`s
+  + Objects can be **explicitly coerced** from one class to another using the `as.*` functions, if available.  
+    - Nonsensical coercion results in `NA`s
 ```{r}
 x <- 0:6
 class(x)
@@ -245,8 +246,10 @@ rbind(x,y)
 ```{r}
 x <- factor(c("yes", "yes", "no", "yes", "no"))
 x
-table(x) ## displays a frequency table of the factors
-unclass(x) ## strips out the class and displays the underlying integer vector
+table(x) 
+## displays a frequency table of the factors
+unclass(x) 
+## strips out the class and displays the underlying integer vector
 ```
   + The order of the levels can be set with the `levels` argument to `factor()`
     - This can be important in linear modelling because the first level is sued as the baseline level.
@@ -307,13 +310,15 @@ x
 names(x)
 
 ##Lists can also have names
-x <- list(a=1, b=2, c=3) ## here, names are assigned as list is established
+x <- list(a=1, b=2, c=3) 
+## here, names are assigned as list is established
 x
 
 ## Matrices can also have names, called dimnames
 m <- matrix(1:4, nrow = 2, ncol = 2)
 m
-dimnames(m) <- list(c("a", "b"), c("c", "d")) ##First vector is rownames, second is colnames
+dimnames(m) <- list(c("a", "b"), c("c", "d")) 
+#First vector is rownames, second is colnames
 m
 ```
   
@@ -360,27 +365,28 @@ data
 * `read.csv` is identical to `read.table` except that the default separator is a comma
   - `.csv` files are common output from excel or other spreadsheet programs.
 
-### Large Datasets  
+### Large Data-sets  
 * Doing the following things will make your life easier and prevent R from "choking"
   + [Read the help page for read.table, which contains many hints](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table)  
-  + Make a rough calculation of the memory required to store your dataset. 
-    - Say for example, you have a data frame with 1,500,000 rows and 120 columns (not *that* big), all of which are numeric data. To roughly claculate how much memory is requrired..  
+  + Make a rough calculation of the memory required to store your data-set. 
+    - Say for example, you have a data frame with 1,500,000 rows and 120 columns (not *that* big), all of which are numeric data. To roughly calculate how much memory is required..  
     - 1,500,000 * 120 * 8 bytes/numeric = 1440000000 bytes  
     - 1440000000 bytes / $2^{20}$ bytes/MB = 1,373.29 MB  
     - 1,373.29 MB = 1.37 GB  
-    - Rule of thumb is that you'll need twice the amount of RAM to be able to read in the dataset  
-  + If the dataset is larger than the amount of RAM on your computer you can probably stop right here.
+    - Rule of thumb is that you'll need twice the amount of RAM to be able to read in the data-set  
+  + If the data-set is larger than the amount of RAM on your computer you can probably stop right here.
     - Type `free -k` in terminal to return amount of RAM in kilobytes (`-b` for bytes, `-m` for megabytes and `-g` for gigabytes)
   + Set `comment.char = ""` if there are no commented lines in your file.
   + Use the `colClasses` argument.
     - Specifying this option instead of using the default can make `read.table` run *MUCH* faster.
     - To use this option you have to know the class of each column in your data frame.
     - If all of the columns are of the same data type, for example "numeric", then you can just set `colClasses = "numeric"`
-    - A quick and dirty way to figure out the clases of each column is to take a small sample and determine it from that.
+    - A quick and dirty way to figure out the classes of each column is to take a small sample and determine it from that.
 ```{r}
 initial <- read.table("datatable.txt", nrows = 100)
 classes <- sapply(initial, class)
-classes ##Coded file wrong, I'm not gonna fix it now, Boolean should have said "TRUE" or "FALSE"
+classes 
+##Coded file wrong, I'm not gonna fix it now, Boolean should have said "TRUE" or "FALSE"
 tabAll <- read.table("datatable.txt", 
                      colClasses = classes)
 ```
@@ -389,7 +395,7 @@ tabAll <- read.table("datatable.txt",
     - A mild overestimate is okay.
     - You can type `wc <filename>` in terminal to return the number of: lines, strings, characters; "lines" are the `nrows`.  
 
-* When using R with larger datasets it's useful to know a few things about your system  
+### Useful things to know about your system when using R with larger data-sets
   + How much memory is available  
     - Type `free -k` into terminal  
   + What other applications are in use  
@@ -400,15 +406,15 @@ tabAll <- read.table("datatable.txt",
     - Type `lsb_release -a` into terminal  
   + Is the OS 32 or 64 bit  
     - Type `lscpu`, listed under first two returns 
-    - On a 64 bit system you'll generallly be able to access more memory
+    - On a 64 bit system you'll generally be able to access more memory
 
 ### Textual Formats  
-* Contains the metadata, such as classes of columns, making transfering data more efficent as the metadata doesn't need to be determined again.  
+* Contains the metadata, such as classes of columns, making transferring data more efficient as the metadata doesn't need to be determined again.  
 * Known as `dumping` and `dputing`.
 * Edit-able, which in the case of corruption allows for a potential recovery.
 * Textual formats can work much better with version control programs.
 * Adhere to the "Unix philosophy", which is to store data as text
-* *Downside:* The format is not very space-efficient and as such ussually requires compression  
+* *Downside:* The format is not very space-efficient and as such usually requires compression  
 * `dput` will deparse an R object, and `dget` can read the data back in from a file
 ```{r}
 y <- data.frame(a=1, b="a")
@@ -456,7 +462,7 @@ close(con)
 ```{r}
 data <- read.csv("foo.txt")
 ```
-  + As such, the connection was not nessacary for this case
+  + As such, the connection was not necessary for this case
 * Reading lines of a text file with `con` from a *gzip* file  
 ```{r}
 con <- gzfile("words.gz")
@@ -478,7 +484,7 @@ head(x) ##Displays the header
 * Operators to extract subsets of R objects
   + `[` always returns an object of the same class as the original
     - subsetting a vector will return a vector, a list will return a list, etc.
-    - Can be used to select more than one element (there is one exception)
+    - Can be used to select more than one element (there is one exception, when subsetting a single element from a matrix)
   + `[[` is used to extract elements of a *list* or *data frame*
     - Can only be used to extract a single element
     - The class of the returned object will not necessarily be a list or data frame
@@ -490,14 +496,21 @@ x <- c("a", "b", "c", "c", "d", "a")
 x[1] ## Returns first element
 x[2] ## Returns second element
 x[1:4] ## Returns first to fourth elements
+x[c(2, 5)] ##Returns 2nd and 5th element
+x[c(-2, -5)]##Returns everything EXCEPT the 2nd and 5th element
+x[-c(2,5)]##Equivelent since the negative will multiply with every element of c(...)
+x[2*c(1,3)]##Just like how this will actually be the 2nd and 6th element
 ```
 * Logical Index for subsetting:
 ```{r}
 x <- c("a", "b", "c", "c", "d", "a")
 x[x > "a"]## returns all elements that are greater than "a"
-u <- x > "a" ## u is a logical vector that indicates which elements of x are greater than "a"
+u <- x > "a" 
+## u is a logical vector that indicates which elements of x are greater than "a"
 u
-x[u] ## subsets all elements of x such that u reports that index as TRUE; elements that are > "a"
+x[u] 
+## subsets all elements of x such that u reports that index as TRUE; 
+##elements that are > "a"
 ```
 
 
@@ -505,7 +518,8 @@ x[u] ## subsets all elements of x such that u reports that index as TRUE; elemen
 * Lists can be subsetted with the `[[` or `$` operators
 ```{r}
 x <- list(foo = 1:4, bar = 0.6)
-x[1]##Extracts the first element as a list, since the orginal set was a list class
+x[1]
+##Extracts the first element as a list, since the orginal set was a list class
 x[[1]]##Extracts the first element as a sequence, not a list
 x$bar ##returns the element that is associated with the name "bar"
 x[["bar"]]##same as x$bar
@@ -528,35 +542,456 @@ x$foo ## element 'foo' does exist
 * The `[[` can also take an integer sequence instead of a single number
 ```{r}
 x <- list(a = list(10, 12, 14), b = c(3.14, 2.81))
-x[[c(1,3)]] ##extracts first element, then the third element of said first element
+x[[c(1,3)]] 
+##extracts first element, then the third element of said first element
 x[[1]][[3]] ##equivelent
 x[[c(2,1)]]##extracts first element of the second element of x
 ```
 
 
-### Matrices
+### Matrices  
+* Subsetted as one would expect with (i,j) type indices.
+```{r}
+x <- matrix(1:6, 2, 3)
+x
+x[1,2] ##First row, second column
+x[2,1] ##Second row, first column
+```
+* Indices can also be missing
+```{r}
+x[1,] ##Returns first row
+x[,2] ##Returns second column
+```
+* By default, when a single element of a matrix is retrieved, it is returned as a vector of length 1 rather than a 1x1 matrix.
+  + This is the exception of the `[` operator always returning the same class
+  + This behavior can be turned off with the setting `drop = FALSE`.
+```{r}
+x <- matrix(1:6, 2, 3)
+x[1,2] ##returns vector
+x[1,2, drop = FALSE] ##returns a 1x1 matrix
+```
+
+* This transition of classes also holds when subsetting a single column or row  
+```{r}
+x <- matrix(1:6, 2, 3)
+x[1,]
+x[1, , drop = FALSE]
+## the second parameter still has to be blank so the row is returned
+```
 
 
 ### Partial Matching
+* Allows one to not type out the full name of an element
+  + Works with the `[[` and `$` operators  
+```{r}
+x <- list(aardvark = 1:5, baking = 1:10)
+x$a 
+##$ looks for a name that matches the "a", since aardvark 
+##starts with an "a" that is returned
+x[["a"]]
+x[["a",exact = FALSE]]
+## exact parameter has to be set to 
+##false for the [[ to accept a partial match
+
+y <- list(aardvark = 1:5, apples = 1:3)
+y$a
+y[["a", exact = FALSE]]
+## Since there are two names that start with "a" the intended 
+##element cannot be determined and NULL is returned
+```
 
 
 ## Removing missing (NA) values from a vector
+* A common operation that needs to be done IRL data
+```{r}
+x <- c(1, 2, NA, 4, NA, 5)
+bad <- is.na(x) ## Creates a logical vector that is TRUE if the 
+##element is missing, and FLASE if the element is not missing
+x[!bad]##Logical is negated to get all the valid elements
+```
+* In the case of multiple things you want to take the subset of with no missing values
+```{r}
+x <- c(1, 2, NA, 4, NA, 5, NA, 7)
+y <- c("a", "b", NA, "d", NA, "f", "g", NA)
+good <- complete.cases(x,y)
+##Indicates which elements of either vectors are missing
+good
+##As such, final two elements print FLASE since there is an NA 
+##in at least one element
+x[good]
+y[good]
+```
+
+```{r}
+airquality[1:6, ]## Returns first 6 rows
+good <- complete.cases(airquality)
+airquality[good, ][1:6, ]
+##Returns first 6 rows that have don't have any missing values
+```
+
+* Additional note from `swirl()`
+```{r}
+my_data <- sample(c(rnorm(100), rep(NA,100)), 20)
+my_data
+is.na(my_data) 
+## Returns a vector of logicals that indicate what positions of my_data are NA
+my_data == NA 
+## Returns a vector of NAs because NA is a placeholder for a qty that's 
+##not available. Therefore the expression is incomplete and returns a 
+##vector of NAs the same length as my_data
+```
 
 
+## Vectorized operations
+* A feature of R that makes it easy to use on the command line
+* Many operations in R are *vectorized* making code more efficient, concise, and easier to read.
+```{r}
+x <- 1:4; y <- 6:9
+x + y ##Adds vectors by position of elements
+x >=2 ##Returns a logical vector that indicates which vectors are > or = 2
+y == 8
+x * y ##Multiplies each element of x by the respective element of y
+x / y ##Divides by element
+```
 
-## Basic Arithmetic operations
+* Vectorized Matrix Operations  
+```{r}
+x <- matrix(1:4, 2, 2); y <- matrix(rep(10,4), 2, 2)
+x * y ##element-wise multiplication
+x / y
+x %*% y ## true matrix multiplication
+```
+
+### Stuff for quiz  
+```{r}
+##4
+x <- 4L
+class(x)#int?
+
+##5
+x <- c(4,TRUE)
+class(x)
+
+##6
+x <- c(1,3,5)
+y <- c(3,2,10)
+rbind(x,y)
+
+##8
+x <- list(2, "a", "b", TRUE)
+class(x[[1]])
+x[[1]]
+
+##9
+x <- 1:4
+y <- 2:3
+x+y
+class(x+y)
+```
 
 
+```{r}
+##10
+x <- c(3, 5, 1, 10, 12, 6)
+ans <- c(0, 0, 0, 10, 12, 6)
+x[x %in% 1:5] <- 0
+x
+```
+
+```{r}
+data <- read.csv("hw1_data.csv")
+##First 2 rows
+data[1:2,]
+
+##Num rows
+nrow(data)
+
+#Extract final 2 rows
+data[(nrow(data)-1):(nrow(data)),]
+
+#Value of 47th row
+data[47,]
+
+#Number of missing Ozone
+bad <-is.na(data[,1])
+sum(bad)
+
+##Mean of ozone without NA
+cleanData <- data[!bad,1]
+mean(cleanData)##mean of Ozone, ignore NA
+
+##Find mean of Solar.R where Ozone values are > 31 & Temp values are >90
+bigOzone <- (data[,1]>31)
+bigTemp <-(data[,4]>90&!is.na(data[,4]))
+sOnBig <- data[bigOzone&bigTemp, 2]
+bad <- is.na(sOnBig)
+cleanSolar <- sOnBig[!bad]
+mean(cleanSolar)
+```
+
+```{r}
+##What is the mean of "Temp" when "Month" is equal to 6
+wheresSix <- (data[,5]==6)
+sixMtemp <- data[wheresSix, 4]
+mean(sixMtemp)
+```
+
+```{r}
+##What was the maximum ozone value in month 5
+wheresFive <- (data[,5]==5)
+fivMonOz <- data[wheresFive, 1]
+bad <- is.na(fivMonOz)
+cleanFOzone <- fivMonOz[!bad]
+max(cleanFOzone)
+```
+
+## Misc Vanilla Functions
+*`dir.create()` - Creates a directory in current working directory (found with `getwd()`)  
+*`args()` - Returns possible arguments of parameter  
+*`file.<arguments>`  
+  + exists - checks if parameter exists, returns logical
+  + info - returns info about file; such as: size, if it is a directory, mode, mtime, ctime, atime, uid, gid, username, groupname.
+* `dir.create` - allows to manipulate directories and file permissions
+* *Sequence of Numbers*
+  + The '`:`' operator  
+```{r}
+1:20
+pi:10 ##Increments by 1 until number is > the upper limit, 10
+15:1 ##Decrementing is cool too
+```
+  + `seq()`  
+```{r}
+seq(1,20) ##Equivelant to `1:20`
+seq(0,10,by=0.5)
+my_seq <- seq(5,10,length=30)##sets `by` so the inc is consistent
+seq_along(my_seq)#Creates a seq from 1:length(my_seq)
+```
+  + `rep()` - creates a vector of a repeated value  
+```{r}
+rep(0, times = 30)
+rep(c(0,1,2),times=10)##One can also use a vector as the argument
+rep(c(0,1,2),each = 10)##Makes 10 of each
+```
+  
+* `paste()` - joins elements of a vector
+  + `collapse` - argument that tells R what character to add inbetween each element.  
+```{r}
+paste(1:3,c("X", "Y", "Z"), sep ="")#paste can also combine vectors
+paste(1:8,c("X", "Y", "Z"), sep ="")#even of diferent length
+```
+  
+* `rnorm()` - draws from a standard normal distribution, number drawn is determined by parameter  
+```{r}
+rnorm(10)
+```
+  
+* `sample()` - takes a sample of the specified size from the elements of x; `replace` is a logical argument that can be included
+```{r}
+sample(c(1:20),10)
+#`sample(c(1:5),10)` 
+##^would cause an error since replace defaults to false and n is bigger than N
+sample(c(1:5),10,replace=TRUE)
+```
+
+* `identical()` - logical return; TRUE if the two objects are **exactly** equal  
+* A note on assigning names
+```{r}
+my_matrix <- matrix(1:20, 4, 5)##4x5 matrix
+patients <- c("Bill", "Gina", "Kelly", "Sean")
+cbind(patients, my_matrix)##NOughty!
+my_data <- data.frame(patients, my_matrix)
+my_data #The drake meme
+```
 
 
-
-
-
-
-
-
-
+  
 # Control structures, functions, scoping rules, dates and times
+### Learning Objectives  
+* Write an **[if-else](#if-else)** expression  
+* Write a **[for loop](#for-loop)**, a **[while loop](#while-loop)**, and a **[repeat loop](#repeat-next-break)**
+* Define a function in R and specify its return value(see **[Functions Part 1](#functions-pt-1)** and **[Functions Part 2](#functions-pt-2)**)  
+* Describe **[how R binds a value to a symbol via the search list](#symbol-binding)**  
+* Define what **[lexical scoping is](#lexical-scoping)** with respect to **[how the value of free variables are resolved in R](#free-variables)**  
+* Describe the difference between **[lexical scoping and dynamic scoping rules](#scoping-rules)**  
+* Convert a character string representing a date/time into an **[R datetime object](#datetime-object)**. 
+  
+## Control Structures  
+* Control structures allow you to control the flow of execution of the program
+  + `if, else`: testing a condition  
+  + `for`: execute a loop a fixed number of times  
+  + `while`:execute a loop *while* a condition is true  
+  + `repeat`: execute an infinite loop  
+  + `break`: break the execution of a loop  
+  + `next`: skip an interation of a loop  
+  + `return`: exit a function  
+* Infinite loops should generally be avoided, even if they are theoretically correct  
+* For command-line interacte work, the *apply functions are more useful
+  
+  
+### if-else  
+* syntax can be just like `cpp`
+```{r}
+x <- sample(1:6, 1)
+if(x>3){
+  y <- 10
+} else {
+  y <- 0
+}
+vals <- c(x,y)
+vals
+```
+* but `R` also excepts other syntax  
+```{r}
+x <- sample(1:6, 1)
+y <- if(x>3){
+  10
+} else {
+  0
+}
+vals <- c(x,y)
+vals
+```
+* nested `if`s and "else-less" `if`s are also acceptable  
+
+### for loop  
+* `for` loops take an interator variable and assign it to successive values from a sequence or vector.
+  + Common for iterating over the elements of an object
+```{r}
+for(i in 1:10){
+  print(i)
+}
+```
+  
+* R is flexible in how you can index different objects; the following loops are all equivelent
+```{r}
+x <-  c("a", "b", "c", "d")
+
+for(i in 1:4){
+  print(x[i])
+}
+
+for (i in seq_along(x)) {##seq_along creates an integer sequence that's as long as x
+  print(x[i])
+}
+
+for(letter in x) {##letter is assigned to the nth element of x
+  print(letter)
+}
+
+for(i in 1:4) print(x[i])##{} can be omitted for a single element in the body
+```
+  
+* Nested for loops are also acceptable  
+  
+### while loop  
+```{r}
+count <- 0
+while(count < 10){
+  print(count)
+  count <- count + 1##Make sure you increment
+}
+```
+
+*A while loop with logical operators
+```{r}
+z <- 5
+while(z>=3 & z <= 10){
+  print(z)
+  coin <- rbinom(1,1,0.5)
+  if(coin == 1){ ##random walk
+    z <- z+1
+  } else {
+      z <- z-1
+    }
+}
+```
+* Conditionals will "**short circuit**" when evaluating `&` or `|`  
+
+### Repeat, Next, Break
+* Not common in statistical applications  
+* only way to exit a `repeat` loop is to call `break`  
+
+```{r}
+x0 <- 1
+tol <- 1e-8
+count <- 0
+
+repeat{
+  count <- count + 1
+  x1 <- sample(seq(-1,1,length.out = 1000), 1)
+  
+  if(abs(x1 - x0) < tol){
+    outVect <- c("In ", count," loops we found a x0, ", x0, ", that was within ", tol, " of x1, ", x1)
+    output <- paste(outVect, collapse = "")
+    print(output)
+    break
+  } else {
+    x0 <- x1
+  }
+}
+
+```
+  
+* loops that are not guaranteed to stop ought to have a hard limit on the number of iterations(e.g. using a for loop instead) and then report whether convergence was achieved or not  
+
+*`next` - used to skip an iteration of a loop
+```{r}
+for(i in 1:100){
+  if(i <= 20){
+    ##Skip the first 20 iterations
+    next
+  }
+  ## Other code could go here
+}
+```
+
+## Functions  
+
+
+### Functions pt 1  
+
+
+### Functions pt 2  
+
+
+
+## Scoping Rules  
+
+
+### Symbol Binding  
+
+
+### Lexical Scoping  
+
+
+### Free Variables  
+
+
+### Scoping Rules  
+
+
+
+## Coding Standards  
+
+
+
+## Dates and Times  
+### Datetime Object
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Loop functions, debugging tools
