@@ -804,7 +804,7 @@ my_data #The drake meme
 ```
 
 
-
+* `invisible(x)` would be used within a function to prevent implicit printing of a variable when the function is called from the cmd_line   
 
 
 
@@ -842,10 +842,10 @@ my_data #The drake meme
   + `while`:execute a loop *while* a condition is true  
   + `repeat`: execute an infinite loop  
   + `break`: break the execution of a loop  
-  + `next`: skip an interation of a loop  
+  + `next`: skip an iteration of a loop  
   + `return`: exit a function  
 * Infinite loops should generally be avoided, even if they are theoretically correct  
-* For command-line interacte work, the *apply functions are more useful
+* For command-line interactive work, the *apply functions are more useful
   
   
 ### if-else  
@@ -874,7 +874,7 @@ vals
 * nested `if`s and "else-less" `if`s are also acceptable  
 
 ### for loop  
-* `for` loops take an interator variable and assign it to successive values from a sequence or vector.
+* `for` loops take an iterator variable and assign it to successive values from a sequence or vector.
   + Common for iterating over the elements of an object
 ```{r}
 for(i in 1:10){
@@ -882,7 +882,7 @@ for(i in 1:10){
 }
 ```
   
-* R is flexible in how you can index different objects; the following loops are all equivelent
+* R is flexible in how you can index different objects; the following loops are all equivalent
 ```{r}
 x <-  c("a", "b", "c", "d")
 
@@ -1010,11 +1010,11 @@ columnmean(airquality, FALSE)
   + they can be passed as arguments to other functions  
   + they can be nested, so that you can define a function inside of another function.
 * The return value of a function is the last expression in the function body to be evaluated  
-* Functions have **named arguments** whch potentially have **default values**  
+* Functions have **named arguments** which potentially have **default values**  
   + The **formal arguments** are the arguments included in the function definition
   + The `formals` function returns a list of all the formal arguments of a function
   + Not every function call in R makes use of all the formal arguments, they can be missing or have a default set.  
-* R function arguments can be matched positionally or by name. 
+* R function arguments can be matched position-ally or by name. 
   + So all the following calls to `sd` are equivalent  
 ```{r}
 mydata <- rnorm(100)
@@ -1039,7 +1039,7 @@ args(lm)
     3. Check for a positional match  
   
 ### Functions pt 2  
-* In addition to not specifying a defauly value, you can also set an argument value to `NULL`
+* In addition to not specifying a default value, you can also set an argument value to `NULL`
 ```{r}
 f <-function(a, b = 1, c = 2, d = NULL) {
   ##<super_rad_code.txt>
@@ -1074,12 +1074,12 @@ myplot <- function(x,y, type = "1", ...) {
 ```{r}
 mean
 ```
-  + The `...` argument is also necessary when the number of arguments passed to the fucntion cannot be known in advance  
+  + The `...` argument is also necessary when the number of arguments passed to the function cannot be known in advance  
 ```{r}
 args(paste)
 args(cat)
 ```
-  + Arguments that appear **after** `...` on the arguemnt list must be named explicitly and cannot be partially matched  
+  + Arguments that appear **after** `...` on the argument list must be named explicitly and cannot be partially matched  
 ```{r}
 paste( "a", "b", sep = ":")
 paste( "a", "b", se = ":")##Attempt to partially match `sep`
@@ -1096,8 +1096,8 @@ lm <- function(x) {x*x} ##lm is already a function in the `stats` package
 lm
 ```
 
-* R searches through diffrent environments when attempting to bind a value to a symbol  
-1. The global environment - which is your workspace in the Evironment pane  
+* R searches through different environments when attempting to bind a value to a symbol  
+1. The global environment - which is your workspace in the Environment pane  
   + iow, local variables are prioritized  
 2. Namepaces of each of the packages- in order of the search list  
   + `search()` displays the search list  
@@ -1139,7 +1139,7 @@ f <- function(x,y) {
 
 * Searching for the value for a free variable  
   + Search starts in the environment in which a function was defined  
-  + Then the search is dontinued in the *parent environment*  
+  + Then the search is continued in the *parent environment*  
   + The search continues down the sequence of parent environments until..
   + We hit the *top-level environment*; this is usually the global environment (workspace) or the namespace of a package.  
   + After the top-level env. the search continues down the search list until.. 
@@ -1197,7 +1197,7 @@ g <- function(x) {
 f(3) ## Computes (2^2 + 2*10) due to dynamic scoping that is simulated here
 ```
 
-* When a  in the global environment and is subsequently *called* from the global enironment, then the defining environment and the calling environment are the same. This can give the illusion of dynamic scoping.
+* When a  in the global environment and is subsequently *called* from the global environment, then the defining environment and the calling environment are the same. This can give the illusion of dynamic scoping.
 ```{r}
 g <- function(x) {
   a <- 3
@@ -1247,7 +1247,7 @@ abline(v = 7, col = "cyan")
   + A **likelihood function** provides a model for a fixed sample outcome.  
   + Individual likelihood values are *meaningless*  
   + Comparing two values, however, is *informative*  
-  + As such we ussually discuss a **Likelihood Ratio** - L(theta[1];y) / L(theta[2];y)  
+  + As such we usually discuss a **Likelihood Ratio** - L(theta[1];y) / L(theta[2];y)  
     - Suppose the following:
 ```{r}
 L_Of_Theta_0.07 <- 0.152
@@ -1326,11 +1326,11 @@ plot(x, exp(-(y - min(y))), type = "l", main = "Mu likelihood")
 ## Coding Standards  
 * "Help make your code readable...just like it is with any other *style*, like your clothing, it's hard to get everyone to agree on one set of ideas. But there are some basic/minimal standards for coding `R`"  
 1. Code should always be written with a text editor and saved as `.txt`  
-  + Can be read by any basic editting program; makes code versatile  
+  + Can be read by any basic editing program; makes code versatile  
   + RStudio saves code as text by default
 2. Indent your code  
 3. Limit the width of your code (80 columns)  
-  + indents and column width can be editted in settings of RStudio  
+  + indents and column width can be edited in settings of RStudio  
   + these limits help promote clean code
 4. Limit the length of individual functions
   + Each function ought to only do one activity
@@ -1375,7 +1375,7 @@ str(p)
 x <- Sys.time()
 x
 p <- as.POSIXlt(x)
-names(unclass(p))
+names(unclass(p)) 
 p$sec
 ```
 
@@ -1431,7 +1431,7 @@ y-x
   + likewise for the `||` and `|` operators  
 * All `&` operators are evaluated before `|` operators  
 * `xor()` evaluates arguments with *exclusive or*  
-* `which()` returns a vector that indicates which indicies are `TRUE`  
+* `which()` returns a vector that indicates which indices are `TRUE`  
 * `any()` returns true if any element is true in the logical vector passed as an argument  
 * `all()` returns true if all the elements in the logical vector passed as an argument are `TRUE`   
 * *Note*: John Chambers, the creator of R once said:
@@ -1448,6 +1448,8 @@ y-x
 
 4 %mult_add_one% 5
 ```
+
+* `rstudioapi::convertTheme(name)` will let you add a new theme
 
 ### Testing out additional thangs  
 ```{r}
@@ -1481,8 +1483,693 @@ f(3)
 
 
 
-
 # Loop functions, debugging tools
 
+### Learning Objectives  
+* Define **[an anonymous function](#anonymous-functions)** and 
+**[describe its use in loop functions.](#lapply)**
+* Describe **[how to start the R debugger](#debugging-tools)** 
+for an arbitrary R function.
+* Describe what **[the traceback() function does](#traceback)** and what is 
+**[the function stack call](#function-stack-call)**
 
-# Simulation, code profiling
+## Loop Functions
+* Loop Functions allow you to execute a loop over an object or set of objects and keep compact, as to work on the command line; these functions then to have `apply` in them.  
+* Overview  
+  + 
+### lapply
+* Loop over a list and evaluate a function on each element  
+* Takes three arguments: 1) a list `x` (Or it'll be coerced to a list using `as.list`)
+```{r}
+lapply
+```
+* `lapply` always returns a list, regardless of the class of the input  
+```{r}
+x <- list(a=1:5, b= rnorm(10))
+lapply(x,mean)
+```
+
+* Each element of the list is a numeric vector and what returns is a vector with a single element  
+```{r}
+x <- list(a= 1:4, b = rnorm(10), c = rnorm(20,1), d = rnorm(100,5))
+lapply(x, mean)
+```
+
+* Here `runif` is called, which creates a uniformed list of uniform random variables. The first argument determines how many variables to return (`runif(2)` will return a vector of length 2)  
+```{r}
+x <- 1:4
+lapply(x, runif)
+
+##Now specify the defaults of runif with lapply
+lapply(x, runif, min = 0, max = 10)
+```
+
+###Anonymous Functions  
+* functions that aren't assigned a name, but are generated "on the fly"  
+```{r}
+x <- list(a = matrix(1:4, 2, 2), b = matrix(1:6, 3, 2))
+x
+
+##Use lapply and an Anon Function to extract the first column of each matrix
+lapply(x, function(elt) elt[,1])
+```
+
+
+### sapply
+* Variant of `lapply` that trys to simplify the result 
+  + If the result is a list where every element's length is 1, then a vector is returned  
+  + If the result is a list where every element is a vector of the same length (>1), a matrix is returned.
+  + `else` case is to just return a list  
+```{r}
+x <- list(a = 1:4, b = rnorm(10), c = rnorm(20,1), d = rnorm(100, 5))
+lapply(x, mean)
+sapply(x, mean)##Returns vector with 4 numbers
+```
+
+
+### apply  
+* Apply a function (often an anon one)over the margins of an array  
+  + Occasionally you'll hear in the wil' that `apply` is better or faster than a for loop. This ain't true at all in R, but was in ol' versions of S
+  + It is most often used to apply a function to the rows or columns of a matrix
+  + Involves less typing
+    - Less typing is always better because good programmers are alzy
+* Arguments  
+```{r}
+str(apply)
+```
+  + `X` is an array
+  + `MARGIN` is an integer vector indicating which margins should be "retained".  
+  + `FUN` is a function to be applied  
+  + ... is for other arguments to be passed to `FUN`  
+
+* Examples  
+```{r}
+x <- matrix(rnorm(200), 20, 10)
+apply(x, 2, mean)##Keep second dimension, columns
+apply(x, 1, sum)##Takes sum over all the rows
+```
+ * For sums and means of matrix dimensions, we use the following shortcuts:
+  + `rowSums` = `apply(x, 1, sum)`  
+  + `rowMeans` = `apply(x, 1, mean)`  
+  + `colSums` = `apply(x, 2, sum)`  
+  + `colMeans` = `apply(x, 2, mean)`  
+  + These shortcut functions are *much faster*, but one won't notice unless they're using a large matrix.  
+  
+```{r}
+x <- matrix(rnorm(200), 20, 10)
+apply(x,1, quantile, probs = c(0.25, 0.75)) 
+#Returns 25th and 7th percentile for each row of the matrix
+```
+
+* Average matrix in an array
+```{r}
+a <- array(rnorm(2*2*10), c(2,2,10))
+apply(a, c(1,2), mean)#Perserve dim 1&2
+rowMeans(a,dims = 2)##Equal with `rowMeans`
+```
+
+
+## *lapply and sapply* with *swirl()*
+* `cls_list <- lapply(flags, class)` will apply the `class()` function to each column of the flags dataset.  
+* The following two are equivalent..(But `sapply` gives a named vector)
+```{r}
+missingHead <- c("name", "landmass", "zone", "area", "population", "language", "religion", "bars", "stripes", "colours", "red", "green", "blue", "gold", "white", "black", "orange", "mainhue", "circles", "crosses", "saltires", "quarters", "sunstars", "crescent", "triangle", "icon", "animate", "text", "topleft", "botright")
+flags <- read.csv(file = "flag.data", header = FALSE)
+colnames(flags) <- missingHead
+
+as.character(lapply(flags, class))
+sapply(flags, class)
+
+```
+```{r}
+flag_colors <- flags[, 11:17]
+head(flag_colors)
+sapply(flag_colors, sum)
+sapply(flag_colors, mean)
+```
+
+* `unique` will return a list of unique elements  
+```{r}
+unique(c(3,4,5,5,5,6,6))
+```
+
+
+### mapply  
+* Multivariate version of lapply  
+* applies a function in parallel over a set of arguments
+```{r}
+str(mapply)
+```
+  + `FUN` is a function to apply  
+  + `...` contains arguments to apply over  
+  + `MoreArgs` is a list of other arguments to `FUN`.
+  + `SIMPLIFY` indicates whether the result should be simplified  
+  
+*Following two are equal, but mapply is concise  
+```{r}
+list(rep(1, 4), rep(2,3), rep(3,2), rep(4,1))
+mapply(rep, 1:4, 4:1)
+```
+
+* "Vectorizing" a function
+```{r}
+noise <- function(n, mean, sd) {
+  rnorm(n,mean,sd)
+}
+noise(5,1,2)#Works as expected
+noise(1:5,1:5, 2)#One would expect 1 rand with mean 1, 2 with mean 2, etc...
+#One is to use mapply to generate the expected behavior
+mapply(noise, 1:5, 1:5, 2)
+```
+
+### tapply
+* Apply a function over subsets of a vector  
+* Arguments..
+```{r}
+str(tapply)
+```
+  + `x` is a vector
+  + `INDEX` is a factor or a list of factors (or else they are coerced to factors)  
+  + `FUN` is a function to be applied  
+  + `...` contains other arguments to be passed `FUN`  
+  + `simplify`, should we simplify the result?
+
+* Take group means
+```{r}
+x = c(rnorm(10), runif(10), rnorm(10,1))
+factor <- gl(3, 10)
+tapply(x, factor, mean)##apply the mean function to the subsets from factor in the x variable
+```
+
+* If you don't simplify you get back a list  
+```{r}
+tapply(x, factor, mean, simplify = FALSE)
+```
+
+* Can also calculate range
+```{r}
+tapply(x, factor, range)
+```
+
+### split  
+* Useful in conjunction with `apply` functions.
+* `split` takes a vector or other objects and splits it into groups determined by a factor or list of factors  
+```{r}
+str(split)
+```
+ + `x` is a vector (or list) or data frame  
+ + `f` is a factor (or coerced to one) or a list of factors  
+ + `drop` indicates whether empty factors levels should be dropped  
+ 
+```{r}
+x <- c(rnorm(10), runif(10), rnorm(10, 1))
+f <- gl(3, 10)
+split(x,f)
+```
+
+* A common idiom is `split` followed by an `lapply`.  
+```{r}
+lapply(split(x, f), mean)
+```
+
+```{r}
+s <- split(airquality, airquality$Month)
+sapply(s, function(x) colMeans(x[, c("Ozone", "Solar.R", "Wind")], na.rm = TRUE))
+##`na.rm = TRUE` gets rid of nas when calculating mean
+```
+
+* Splitting on More than one Level
+```{r}
+x <- rnorm(10)
+f1 <- gl(2,5)
+f2 <- gl(5, 2)
+f1
+f2
+interaction(f1, f2) #Combines the levels
+```
+
+* Interactions can create empty levels  
+```{r}
+str(split(x, list(f1, f2)))
+str(split(x, list(f1, f2), drop = TRUE))
+```
+
+* `drop` = TRUE takes care of empty levels  
+
+
+
+
+## *vapply and tapply* with *swirl()*
+## vapply  
+* `vapply` allows you to specify the format of the result explicitly.
+  + If the default doesn't match the format you specify it'll throw an error
+  + Helpful when writing functions
+```{r}
+sapply(flags, class)#Implicitly returns a simplified result
+vapply(flags, class, character(1))#Explicitly returns chars
+```
+  + faster than `sapply` in large datasets
+    - sapply saves typing when doing analysis interactively (at the prompt)  
+
+### tapply  
+* `tapply` applies a function to each cell of an array, given by the levels of certain factors.  
+* The following finds the freq. of animate images on flags, from the flags dataset used in the last `swirl()` section, with respect to each continent.  
+```{r}
+tapply(flags$animate, flags$landmass, mean)
+```
+
+* Or a stat summary of population (in millions) with respect to red being on the flag  
+```{r}
+tapply(flags$population, flags$red, summary)
+```
+
+
+## Debugging Tools  
+* These tools come with R  
+
+
+### Diagnosing the Problem
+* Indications that something's not right
+  + `message`: A generic notification/diagnostic message produced by the `message` function; execution of the function continues  
+  + `warning`: An indication that something is wrong but **not necessarily fatal**; execution of the function continues, warning returns *after execution*; generated by the `warning` function  
+```{r}
+log(-1)
+```
+  
+  + `error`: An indication that a fatal problem has occurred; execution stops; produced by the `stop` function  
+  + `condition`: A generic concept for indicating that something unexpected can occur; all of the above are types of conditions; programmers can create their own conditions
+
+* How to evaluate an error  
+  + Identify your input and how a function was called  
+  + Identify what you expected as an output, message, etc.  
+  + Identify what you actual got as an output and how it differs from what you expected  
+  + Question if your expectation themselves were correct  
+  + See if you can exactly reproduce the problem as to verifying your understanding of the issue/error
+
+
+### Basic Tools  
+
+* Primary tools, these are interactive tools specifically designed to allow you to pick through a function. 
+  + `traceback`: prints out the function call stack after an error occurs; does nothing if there's no error  
+  + `debug`: flags a function for "debug" mode which allows you to step through execution of a function one line at a time  
+    - Anytime the function is called it will suspend the run and open up a debug, which will go through the function line by line
+  + `browser`: suspends the execution of a function wherever it is called and puts the function in debug mode  
+    - Helpful to stop in the middle of a function
+  + `trace`: allows you to inset debugging code into a function a specific places.  
+    - Good when using other's code. Ussually just insert `browser`
+  + `recover`: allows you to modify the error behavior so that you can browse the function call stack
+    - Normally when you get an error, the execution of the function that threw it will stop and you'll get the error message to display and you're returned to the console, by default. Setting an error handler can change this behavior. `recover` is one of these *error handler*s.
+
+### Using the Tools  
+* Giving the traceback is helpful for communicating an error.  
+* `traceback()` has to be called right after the error
+  + Shows functions between code and where where an error occurred  
+* `debug`
+  + Hit `n` to run next line
+  + Ex:  
+    - `>debug(lm)`
+    - `>lm(y ~ x)`
+    - <Debug menu will open when lm is ran>
+    
+* `recover`
+  + `options(error = recover)` will set a global option for the session so that whenever an error occurs a menu shows up, that is similar to `traceback`
+
+* Summary
+  + There are three main indications of a problem/condition: `message`, `warning`, `error`
+    - only an `error` is fatal
+  + When analyzing a function with a problem, make sure you can reproduce the problem, clearly state your expectations and how the output differs form your expectation.  
+  + Interactive debugging tools `traceback`, `debug`, `browser`, `trace`, and `recover` can be used to find problematic code in functions
+  + Debugging tools are not a substitute for thinking  
+  
+
+```{r}
+ints <- seq(from = 1.75, length.out = 6, by = 1.5)
+sleeptime <- strptime("08:00", "%H:%M")
+sleeptime + (ints) * 3600
+```
+
+
+
+
+
+
+
+
+
+
+
+# Simulation & code profiling
+
+### Learning Objectives  
+* Call the  **[str function on an arbitrary R object.](#the-str-function)**  
+* Describe the difference between the **["by.self"](#by.self)** and **["by.total"](#by.total)** output produced by the R profiler.
+* Simulate a **[random normal variable](#rnorm)** with an arbitrary mean and standard deviation.  
+* Simulate data from a **[normal linear model.](#linear-regression)**  
+  
+## The str Function  
+**"Most useful function in `R`"**
+* A diagnostic function and an alternative to `summary`  
+* Good to display (abbrv.) contents of (possibly nested) lists.  
+* Displays approx. one line per basic object  
+
+```{r}
+str(str) #A function( that takes an object, ...)
+str(lm)#returns the args. for lm fn
+x <- rnorm(100, 2, 4)
+summary(x)# shows stats summary
+str(x)#Shows what the data look like
+f <-  gl(40, 10)##Factor with 40 levels, each is rep 10 times
+str(f)##Gives some info on factor
+summary(f)##Gives num of elements in each of 40 levels, not compact
+library(datasets)
+head(airquality)
+str(airquality)
+m <- matrix(rnorm(100), 10, 10)
+str(m)
+m[,-1]
+##Create list of airquality split by month
+s <- split(airquality, airquality$Month)
+str(s)## gives a summary of nested dataframes
+```
+  
+
+## Simulation - Generating Random Numbers  
+
+* Simulation is important to reproduce results  
+* Functions for simulating probability distributions in R  
+  + `rnorm`: generate random Normal variate with a given mean and standard deviation  
+  + `dnorm`: evaluate the Normal probability density (with a given mean/SD) at a point (or vector of points)  
+  + `pnorm`: evaluate the cumulative distribution function for a Normal distribution  
+  + `rpois`: generate random Poisson variates with a given rate.  
+  
+* Probability distribution functions are prefixed with a 
+  + `d` for density  
+  + `r` for random number generation  
+  + `p` for cumulative distribution  
+  + `q` for quantile function  
+
+```{r}
+n <- 100
+x <- seq(from = 0, to = 1, length = n)
+p <- sample(seq(from = 0, to = 1, length = 100000), size = n)
+q <- sample(x)
+
+
+dnorm(x, mean = 0, sd = 1, log = FALSE)
+rnorm(n, mean = 0, sd = 1)
+pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+```
+
+* Always set the random number seed when conducting a simulation
+```{r}
+set.seed(1)
+rnorm(5)
+rnorm(5)
+set.seed(1)
+rnorm(5)#Will be same as first rnorm
+```
+
+* Generating Poisson data
+
+```{r}
+rpois(10, 1)## 10 vars with rate of 1
+rpois(10, 2)
+rpois(10, 20)
+ppois(2, 2) ## Cumulative distribution
+ppois(4,2)## Pr(x <= 4) with rate of 2
+ppois(6,2)## Pr(x <= 6) with rate of 2
+```
+
+## Simulation - Simulating a Linear Model  
+* Suppose we want to simulate from the following linear model:
+$$y = B~0~ + B~1~x + E$$
+where $$E ~ N(0,2)$$, Assume $$x ~ N(0,1)$$, $$B~0~ = 0.5$$ and $$B~1~ = 2$$.  
+
+```{r}
+set.seed(20)
+x <- rnorm(100)# default mean = 0, sd = 2
+e <- rnorm(100, 0, 2) #mean = 0, sd = 2
+y <- 0.5 + 2 + x + e
+summary(y)
+plot(x,y)
+```
+
+* Simulating a Poisson model where:
+  + Y ~ Poisson(mu)
+  +log(mu) = $$B~0~ + B~1~x$$  
+  +$$B~0~ = 0.5$$ and $$B~1~ = 0.3$$. 
+* We need to use the `rpois` function for this  
+```{r}
+set.seed(1)
+x <- rnorm(100)
+log.mu <- 0.5 + 0.3 * x
+y <- rpois(100, exp(log.mu))
+summary(y)
+plot(x,y)
+```
+   
+
+
+## Simulation - Random Sampling  
+* `sample` function
+  + Allows you to draw randomly from a set
+  + `sample(1:10, 4)` will sample 4 random numbers between 1 and 10 without replacement
+```{r}
+set.seed(1)
+sample(1:10, 4)
+sample(1:10, 4)
+sample(letters, 5)
+sample(1:10) ## permutation
+sample(1:10)
+sample(1:10, replace = TRUE) ## with replacement
+```
+  
+* Summary  
+  + Drawing samples from specific probability distribution ns can be done with `r*` functions  
+  + Standard distributions are built in: Normal, Poisson, Binomial, Exponential, Gamma, etc.  
+  + The `sample` function can be used to draw random samples from arbitrary vectors  
+  + Setting the random number generator seed via set.seed is critical for reproducibility
+
+## *Looking at Data* in `swirl()`  
+* When first working with a new dataset, the first thing you should do is look at it!
+  + What is the format?
+  + What are the dimensions?  
+  + What are the variable names?  
+  + How are the variables stored?  
+  + Are there missing data?  
+  + Are there any flaws in the data?  
+* This lesson will be using a dataset constructed from the United States Department of Agriculture's PLANTS Database to show off some ways to look at data  
+
+```{r}
+plants <- dget("plants.R")
+class(plants)
+dim(plants)
+nrow(plants)
+ncol(plants)
+object.size(plants)
+names(plants)
+head(plants)
+head(plants, 10)
+tail(plants)
+tail(plants, 15)
+summary(plants)
+table(plants$Active_Growth_Period)#Make a table based on a factor
+str(plants)##One of the "best" to use
+```
+
+
+## *Simulation* in `swirl()`  
+* This section focuses on the r*** functions for prob. distributions in R  
+
+* `sample()`
+  + Simulate rolling four six-sided dice:
+```{r}
+sample(1:6, 4, replace = TRUE)
+```
+  
+  + Simulate flipping an unfair coin 100 times
+```{r}
+flips <- sample(c(0,1), 100, replace = TRUE, c(0.3, 0.7))
+sum(flips) #Num of heads
+```
+  
+* `rbinom()`
+  + Performs a random binomial sample  
+  + Demonstrating unfair coin simulation with `rbinorm`
+    - This will return the number of successes(`1`s)  
+```{r}
+rbinom(1, size = 100, prob = 0.7)
+```
+  
+* `rnorm()`
+  + std. normal distribution
+```{r}
+rnorm(10)
+rnorm(10, 100, 25)#Default can be changed too
+```
+  
+* `rpois()`
+  + Poisson distribution
+```{r}
+rpois(n = 5, 10)#mean = 10/(time int)
+```
+  
+* `hist()`
+  + Histogram function
+
+* All of the standard probability distributions are built into R, including...
+  + `rexp()` - exponential  
+  + `rchisq()` - chi-squared  
+  + `rgamma()` - gamma
+  
+
+
+## R Profiler  
+### Pt. 1  
+* Helps you figure out why a program is taking so much time and suggests strats for fixing the problem. 
+* Profiling is a systematic way to examine how much time is spent in different parts of a program  
+* Useful when trying to optimize your code  
+* Profiling is better than guessing when trying to analyze a project
+  
+* One should not think of optimization first. You should focus on getting the code to run and be understandable.
+  + "*We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil.*"  *--Donald Knuth*  
+  + Difficult to figure out where your program is spending most of it's time without having the program all together.    
+* *So.. You want optimize your code...*
+  + Remember, you are a scientist. Collect data first,
+  + collect said data with **profiling**
+    
+### Using system.time()  
+* Takes an arbitrary R expression as input (can be wrapped in curly braces) and returns the amount of time take to evalue the expression  
+* Comuptes the time (in seconds) needed toe xecute an expression
+  + If there's an error, it'll return time 'til the error occured.  
+* Returns an object of class `proc_time`
+  + **user time**: time charged to the CPU(s) for this expression (Time the computer experiences) 
+  + **elapsed time**: "wall clock" time (Time the user experiences)
+* Usually, the two times are relatively close  
+  + Elapsed time may be *greater than* user time if the CPU spends a lot of time waiting around for external events to happen.  
+  
+```{r}
+system.time(readLines("http://www.jhsph.edu"))
+```
+  
+  
+  + Elapsed time may be *smaller than* the user time fi your machine has multiple cores/processors (and is capable of using them)  
+    - Multi-threaded BLAS libraries (vecLib/Accelerate, ATLAS, ACML, MKL)  
+    - Parallel processing via the **parallel** package  
+    
+```{r}
+hilbert <- function(n) {
+  i <- 1:n
+  1 / outer(i - 1, i, "+")
+}
+
+x <- hilbert(1000)
+system.time(svd(x))
+```
+
+* Testing a whole expression:  
+```{r}
+system.time({
+  n <- 1000
+  r <- numeric(n)
+  for(i in 1:n) {
+    x <- rnorm(n)
+    r[i] <- mean(x)
+  }
+})
+```
+
+* `system.time()` allow syou to test cetrain functions or code blocks  
+  + So this is assuming that you know where to look. 
+  + Pt. 2 will cover what to do if you don't know where to start    
+  
+  
+
+
+### Pt. 2, Using Rprof()
+* `Rprof()` function starts the profiler in R
+  + R must be compiled with profiler support (but this is usually the case)
+  +  You should not use both `Rprof()` and `system.time()` together 
+  + If your code runs very quickly, the profiler is not useful; however you probably don't need it in that case   
+  
+* `summaryRprof()` function summarizes the output from `Rprof()` 
+  + keeps track of the function call stack at regualrly sampled intervals and tabulates how much time is spent in each function
+  + Default sampling interval is 0.02 seconds  
+  
+  + There are two methdos for normalizing the data  
+    - "by.total" divides the time spent in each function by the total run time  
+    - "by.self" does the same but first subtracts out time spent in fucntions above in the call stack  
+    
+### Using "by total" and "by self"  
+* `by.total`  
+  + normalizes by total time spent in a function.
+    - so by.total reports how much time is spent in top level function, ussually just calling to helper functions
+  
+* `by.self`  
+  + tells you how much time is being taken in a given function after subtracting out lower level functions
+
+* C or Fortran code is not profiled
+
+
+
+## *Base Graphics* in `swirl()`  
+* One of the greatest strengths of R is the ease with which it can create publication0quality graphics.  
+```{r}
+data(cars)
+head(cars)
+plot(cars)
+```
+
+* R always trys to output somemthing sensible, as such `plot(cars)` assumes you want the two columns plotted against eachother  
+* Below R uses the argument names in the first example, then the second corrects this  
+
+```{r}
+plot(cars$speed, cars$dist)
+plot(cars$speed, cars$dist, 
+     xlab = "Speed", ylab = "Stopping Distance", 
+     main = "My Plot", sub = "My Plot Subtitle")
+```
+
+* Limit x range
+```{r}
+plot(cars, xlim = (c(10,15)))
+plot(cars, pch = 2)##Triangles
+plot(cars, col = 2)##Color is red
+```
+
+* `boxplot()`
+```{r}
+data(mtcars)
+boxplot(formula = mpg ~ cyl, data = mtcars)
+```
+  
+* Histograms
+```{r}
+hist(mtcars$mpg)
+```
+
+
+### Scribbles from quiz  
+```{r}
+##1
+set.seed(1)
+rpois(5,2)
+```
+
+```{r}
+##5
+set.seed(10)
+x <- rep(0:1, each = 5)
+e <- rnorm(10,0,20)
+y <- 0.5 + 2 * x + e
+```
+
+
+
+
+
+
+
+
+
